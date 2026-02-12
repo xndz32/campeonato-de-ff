@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FF CHAMPIONSHIP | Enzo Eduardo Pessatto</title>
+    <style>
+        :root {
+            --primary: #FF0033; /* Vermelho FF */
+            --secondary: #FFD700; /* Dourado */
+            --dark: #0f0f13;
+            --card-bg: #1a1a20;
+            --text: #ffffff;
+            --text-muted: #b0b0b0;
+            --font-main: 'Segoe UI', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
+        
+        body { 
+            background-color: var(--dark); 
+            color: var(--text); 
+            background-image: radial-gradient(circle at top, #2a0a10 0%, #0f0f13 60%);
+            min-height: 100vh;
+        }
+
+        /* BARRA DO CRIADOR */
+        .creator-bar {
+            background: linear-gradient(90deg, #000, #330009);
+            text-align: center;
+            padding: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--primary);
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(15, 15, 19, 0.95);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(255, 0, 51, 0.1);
+        }
+
+        .logo { font-size: 26px; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; }
+        .logo span { color: var(--primary); text-shadow: 0 0 10px rgba(255, 0, 51, 0.6); }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+
+        /* BOTÕES GERAIS */
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 800;
+            text-transform: uppercase;
+            transition: 0.3s;
+            border: 1px solid #ff3355;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover { 
+            background: #cc0029; 
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.4); 
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+        .btn-outline:hover { background: var(--secondary); color: #000; }
+
+        /* HERO SECTION */
+        .hero {
+            text-align: center;
+            padding: 40px 10px;
+            animation: fadeIn 1s ease;
+        }
+        .hero h1 { font-size: 36px; line-height: 1.1; margin-bottom: 10px; text-transform: uppercase; font-style: italic; }
+        .hero p { color: var(--text-muted); margin-bottom: 25px; }
+
+        /* CARDS */
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid #2a2a35;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--primary); border-radius: 12px 0 0 12px;
+        }
+        
+        .card h2 { margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px; color: var(--text); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* FERRAMENTA NICK */
+        .nick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .copy-btn {
+            background: #25252e; border: 1px solid #444; color: white;
+            padding: 12px; border-radius: 6px; cursor: pointer; font-size: 14px; transition: 0.2s;
+        }
+        .copy-btn:active { transform: scale(0.95); background: var(--secondary); color: #000; }
+        .copy-btn small { display: block; font-size: 10px; color: #888; margin-top: 4px; }
+
+        /* GRID INFO */
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .info-box {
+            background: linear-gradient(135deg, #1a1a20, #222);
+            padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #333;
+        }
+        .info-box h3 { font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 5px; }
+        .info-box p { font-size: 20px; font-weight: 800; color: var(--secondary); }
+
+        /* FORMULÁRIO */
+        .input-group { margin-bottom: 15px; text-align: left; }
+        .input-group label { font-size: 12px; color: #aaa; margin-bottom: 5px; display: block; }
+        input, select {
+            width: 100%; padding: 12px; background: #0f0f13; border: 1px solid #333;
+            color: white; border-radius: 6px; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--primary); }
+
+        /* REGRAS (ACCORDION) */
+        details { background: #15151a; margin-bottom: 10px; border-radius: 6px; overflow: hidden; }
+        summary { padding: 15px; cursor: pointer; font-weight: bold; list-style: none; user-select: none; display: flex; justify-content: space-between; }
+        summary::after { content: '+'; color: var(--primary); font-weight: bold; }
+        details[open] summary::after { content: '-'; }
+        .rules-content { padding: 15px; border-top: 1px solid #333; font-size: 14px; color: #ccc; line-height: 1.5; }
+
+        footer { text-align: center; padding: 40px 20px; color: #666; font-size: 12px; border-top: 1px solid #222; margin-top: 30px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .glow { box-shadow: 0 0 15px var(--primary); }
+    </style>
+</head>
+<body>
+
+    <div class="creator-bar">DEV: ENZO EDUARDO PESSATTO</div>
+
+    <header>
+        <div class="logo">FF <span>CHAMPIONSHIP</span></div>
+    </header>
+
+    <main class="container">
+        
+        <section class="hero">
+            <h1>DOMINE O <span style="color:var(--primary)">SERVIDOR</span></h1>
+            <p>Mostre que sua DUPLA é a melhor. Inscreva-se e prove seu valor.</p>
+            
+            <a href="#inscricao" class="btn glow">GARANTIR VAGA AGORA</a>
+        </section>
+
+        <div class="info-grid">
+            <div class="info-box">
+                <h3>💰 Premiação Total</h3>
+                <p>R$ 15,00</p>
+            </div>
+            <div class="info-box">
+                <h3>👥 Formato</h3>
+                <p>DUO (2x2)</p>
+            </div>
+            <div class="info-box">
+                <h3>🗺️ Mapa</h3>
+                <p>BERMUDA</p>
+            </div>
+            <div class="info-box">
+                <h3>💲 Inscrição</h3>
+                <p style="color: #fff">GRÁTIS</p>
+            </div>
+        </div>
+
+        <section class="card">
+            <h2>🛠️ Ferramentas Pro</h2>
+            <div class="nick-grid">
+                <button class="copy-btn" onclick="copyText('ㅤ', this)">
+                    ESPAÇO INVISÍVEL
+                    <small>(Clique para copiar)</small>
+                </button>
+                <button class="copy-btn" onclick="copyText('ﾠ', this)">
+                    ESPAÇO PEQUENO
+                    <small>(Clique para copiar)</small>
+                </button>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>📜 Regras do Torneio</h2>
+            <details>
+                <summary>🚫 Uso de Hack/Regedit</summary>
+                <div class="rules-content">O uso de qualquer software de terceiros resultará em banimento imediato da dupla e da guilda.</div>
+            </details>
+            <details>
+                <summary>⏰ Tolerância de Atraso</summary>
+                <div class="rules-content">Tempo máximo de espera na sala: 10 minutos. Após isso, a partida inicia com quem estiver.</div>
+            </details>
+            <details>
+                <summary>📱 Plataforma</summary>
+                <div class="rules-content">Apenas MOBILE. Emuladores são estritamente proibidos neste campeonato.</div>
+            </details>
+        </section>
+
+        <section class="card" id="inscricao">
+            <h2>📝 Inscrição Automática</h2>
+            <p style="font-size: 13px; color: #aaa; margin-bottom: 15px;">Preencha abaixo para gerar sua mensagem de inscrição e enviar no WhatsApp.</p>
+            
+            <div class="input-group">
+                <label>Nome da Dupla/Time</label>
+                <input type="text" id="teamName" placeholder="Ex: Los Grandes">
+            </div>
+            
+            <div class="input-group">
+                <label>Nick Jogador 1</label>
+                <input type="text" id="p1Name" placeholder="Ex: Nobru">
+            </div>
+
+            <div class="input-group">
+                <label>Nick Jogador 2</label>
+                <input type="text" id="p2Name" placeholder="Ex: Cerol">
+            </div>
+
+            <button class="btn" style="background: #25D366; border-color: #128C7E;" onclick="sendWhatsapp()">
+                📤 ENVIAR INSCRIÇÃO
+            </button>
+        </section>
+
+        <a href="https://chat.whatsapp.com/JFsIkx0jhv1KC1bpwMDkWQ" target="_blank" class="btn btn-outline" style="margin-top: 10px;">
+            ENTRAR NO GRUPO DE AVISOS
+        </a>
+
+    </main>
+
+    <footer>
+        <p>© 2026 FF Championship. Todos os direitos reservados.</p>
+        <p style="margin-top: 10px; color: var(--text);">Desenvolvido por: <strong style="color: var(--primary);">Enzo Eduardo Pessatto</strong></p>
+    </footer>
+
+    <script>
+        function copyText(text, btn) {
+            navigator.clipboard.writeText(text).then(() => {
+                const original = btn.innerHTML;
+                btn.innerHTML = "COPIADO! ✅";
+                btn.style.borderColor = "#25D366";
+                setTimeout(() => {
+                    btn.innerHTML = original;
+                    btn.style.borderColor = "#444";
+                }, 2000);
+            });
+        }
+
+        function sendWhatsapp() {
+            const team = document.getElementById('teamName').value;
+            const p1 = document.getElementById('p1Name').value;
+            const p2 = document.getElementById('p2Name').value;
+
+            if(!team || !p1 || !p2) {
+                alert("Por favor, preencha todos os campos da inscrição!");
+                return;
+            }
+
+            const msg = `*🏆 NOVA INSCRIÇÃO DUO FF*%0A%0A🛡️ *Time:* ${team}%0A👤 *Jogador 1:* ${p1}%0A👤 *Jogador 2:* ${p2}%0A%0A_Gostaria de confirmar minha vaga!_`;
+            
+            // Copia o texto para caso o link falhe
+            navigator.clipboard.writeText(msg.replace(/%0A/g, '\n').replace(/_/g, '').replace(/\*/g, ''));
+            
+            const admNumber = ""; // OPCIONAL: COLOQUE SEU NÚMERO AQUI (Ex: 5541999999999)
+            
+            if(admNumber) {
+                window.open(`https://wa.me/${admNumber}?text=${msg}`, '_blank');
+            } else {
+                alert("Inscrição gerada! Cole no grupo do torneio.");
+                window.open("https://chat.whatsapp.com/JFsIkx0jhv1KC1bpwMDkWQ", '_blank');
+            }
+        }
+    </script>
+</body>
+</html>
